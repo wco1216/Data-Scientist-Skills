@@ -1,0 +1,46 @@
+```{r}
+library(dplyr, tidyr)
+library(ggplot2)
+```
+
+```{r}
+ds <- read.csv("https://raw.githubusercontent.com/wco1216/Data-Scientist-Skills/master/datascientists.csv", TRUE, ",")
+da <- read.csv("https://raw.githubusercontent.com/wco1216/Data-Scientist-Skills/master/dataanalyst.csv", TRUE, ",")
+de <- read.csv("https://raw.githubusercontent.com/wco1216/Data-Scientist-Skills/master/dataengineer.csv", TRUE, ",")
+```
+
+```{r}
+dsskills <- ds %>%
+  count(skills) %>%
+  filter(n > 2)
+daskills <- da %>%
+  count(skills) %>%
+  filter(n > 2)
+deskills <- de %>%
+  count(skills) %>%
+  filter(n > 2)  
+```
+
+```{r}
+ggplot(dsskills, aes(x=reorder(skills, n),
+                  y=n, label="count")) +
+  geom_bar(stat='identity', width=.5)  +
+  scale_fill_manual(name="Data Scientist Skills") + 
+  labs(title= "Desired Skills for a Data Scientist") + 
+  coord_flip()
+
+ggplot(daskills, aes(x=reorder(skills, n),
+                  y=n, label="count")) +
+  geom_bar(stat='identity', width=.5)  +
+  scale_fill_manual(name="Data Analyst Skills") + 
+  labs(title= "Desired Skills for a Data Analyst") + 
+  coord_flip()
+
+ggplot(deskills, aes(x=reorder(skills, n),
+                  y=n, label="count")) +
+  geom_bar(stat='identity', width=.5)  +
+  scale_fill_manual(name="Data Engineer Skills") + 
+  labs(title= "Desired Skills for a Data Engineer") + 
+  coord_flip()
+
+```
